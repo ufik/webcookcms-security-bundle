@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - 5.6
   - 7
   - hhvm
 
@@ -9,4 +8,4 @@ before_script:
   - composer install
   
 script:
-  - ./runTests.sh
+  - ./runTests.sh coverage
