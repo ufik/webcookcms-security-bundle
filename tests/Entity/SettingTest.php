@@ -20,7 +20,7 @@ class SettingTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $this->assertEquals("Timezone", $settings[0]->getName());
         $this->assertEquals("timezone", $settings[0]->getKey());
-        $this->assertEquals("angular-WebcookCms-app", $settings[0]->getSection());
+        $this->assertEquals("general", $settings[0]->getSection());
         $this->assertEquals("GMT", $settings[0]->getValue());
 
     }

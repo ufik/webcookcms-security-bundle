@@ -257,7 +257,7 @@ class UserController extends BaseRestController
      */
     public function getUserActiveAction()
     {
-        $view = $this->view($this->get('security.context')->getToken()->getUser(), 200);
+        $view = $this->view($this->get('security.token_storage')->getToken()->getUser(), 200);
 
         return $this->handleView($view);
     }
