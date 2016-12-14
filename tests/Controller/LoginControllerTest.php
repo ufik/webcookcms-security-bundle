@@ -3,7 +3,7 @@
 namespace Webcook\Cms\SecurityBundle\Tests\Controller;
 
 use Webcook\Cms\SecurityBundle\Controller\LoginController;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
@@ -38,7 +38,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
         $controller->setContainer($container);
 
         $attributes = new ParameterBag();
-        $attributes->set(SecurityContextInterface::AUTHENTICATION_ERROR, true);
+        $attributes->set(Security::AUTHENTICATION_ERROR, true);
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
