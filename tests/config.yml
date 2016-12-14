@@ -1,0 +1,11 @@
+parameters:
+    resources_path: %kernel.root_dir%/../../../../../../../../src/Webcook/Cms/SecurityBundle/Controller
+
+#Google Authenticator
+scheb_two_factor:
+    google:
+        enabled: true
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/../../../../../../../../tests/routing.yml"

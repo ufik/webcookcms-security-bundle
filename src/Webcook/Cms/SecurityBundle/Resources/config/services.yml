@@ -1,0 +1,8 @@
+services:
+    security.access.WebcookCms_voter:
+        class:      Webcook\Cms\SecurityBundle\Authorization\Voter\WebcookCmsVoter
+        arguments:
+            - @doctrine.orm.entity_manager
+        public:     false
+        tags:
+           - { name: security.voter }

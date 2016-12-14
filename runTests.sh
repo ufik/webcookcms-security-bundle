@@ -1,0 +1,1 @@
+vendor/webcookcms/common-bundle/runTests.sh

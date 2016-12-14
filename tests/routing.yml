@@ -1,0 +1,3 @@
+webcookcms_security:
+    resource: "@WebcookCmsSecurityBundle/Resources/config/routing.yml"
+    prefix: /api

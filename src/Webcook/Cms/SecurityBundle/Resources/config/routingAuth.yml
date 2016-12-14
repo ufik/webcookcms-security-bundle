@@ -1,0 +1,23 @@
+_security_forgotPassword:
+    path:  /forgotPassword
+    defaults: { _controller: WebcookCmsSecurityBundle:Login:forgotPassword }
+    options: 
+        i18n: false
+
+_security_resetPasswordView:
+    path:  /resetPasswordView
+    defaults: { _controller: WebcookCmsSecurityBundle:Login:resetPasswordView }
+    options: 
+        i18n: false
+
+_security_resetPasswordEmail:
+    path:  /resetPasswordEmail
+    defaults: { _controller: WebcookCmsSecurityBundle:Login:resetPasswordEmail }
+    options: 
+        i18n: false
+
+_security_resetPassword:
+    path:  /resetPassword
+    defaults: { _controller: WebcookCmsSecurityBundle:Login:resetPassword }
+    options: 
+        i18n: false
