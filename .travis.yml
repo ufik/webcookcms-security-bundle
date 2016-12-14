@@ -5,6 +5,7 @@ php:
   - hhvm
 
 before_script: 
+  - composer self-update --preview
   - composer install
   
 script:
