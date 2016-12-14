@@ -13,7 +13,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Webcook\Cms\CommonBundle\Base\BasicEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
-use JMS\Serializer\Annotation\Groups;
 
 /**
  * System user entity.
@@ -25,9 +24,8 @@ class User extends BasicEntity implements UserInterface, TwoFactorInterface,\Ser
 {
     /**
      * Username of the user.
-     * @Groups({"general"})
      * 
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=64, unique=true)
      */
     private $username;
 
@@ -92,26 +90,25 @@ class User extends BasicEntity implements UserInterface, TwoFactorInterface,\Ser
         $this->isActive = true;
         $this->settings = new ArrayCollection();
 
-        $setting = new Setting();
+        $timezone = new Setting();
 
-        $setting->setName('Timezone');
-        $setting->setKey('timezone');
-        $setting->setValue('GMT');
-        $setting->setSection('general');
-        $setting->setUser($this);
+        $timezone->setName('Timezone');
+        $timezone->setKey('timezone');
+        $timezone->setValue('GMT');
+        $timezone->setSection('general');
+        $timezone->setUser($this);
 
-        $this->settings->add($setting);
+        $this->settings->add($timezone);
 
-        $setting1 = new Setting();
+        $language = new Setting();
 
-        $setting1->setName('language');
-        $setting1->setKey('language');
-        $setting1->setValue('en');
-        $setting1->setSection('general');
-        $setting1->setUser($this);
+        $language->setName('language');
+        $language->setKey('language');
+        $language->setValue('en');
+        $language->setSection('general');
+        $language->setUser($this);
 
-        $this->settings->add($setting1);
-
+        $this->settings->add($language);
 
         // may not be needed, see section on salt below
         //$this->salt = md5(uniqid(null, true));

@@ -10,7 +10,7 @@ namespace Webcook\Cms\SecurityBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Security;
 use Webcook\Cms\SecurityBundle\Entity\User;
 use Webcook\Cms\SecurityBundle\Form\Type\UserType;
 
@@ -34,19 +34,19 @@ class LoginController extends Controller
         $session = $request->getSession();
 
         // get the login error if there is one
-        if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+        if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(
-                SecurityContextInterface::AUTHENTICATION_ERROR
+                Security::AUTHENTICATION_ERROR
             );
-        } elseif (null !== $session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
-            $error = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
+        } elseif (null !== $session && $session->has(Security::AUTHENTICATION_ERROR)) {
+            $error = $session->get(Security::AUTHENTICATION_ERROR);
+            $session->remove(Security::AUTHENTICATION_ERROR);
         } else {
             $error = '';
         }
 
         // last username entered by the user
-        $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
+        $lastUsername = (null === $session) ? '' : $session->get(Security::LAST_USERNAME);
 
         return $this->render(
             'WebcookCmsSecurityBundle:Auth:login.html.twig',
@@ -75,9 +75,7 @@ class LoginController extends Controller
      *
      */
     public function resetPasswordEmailAction(Request $request)
-    {   
-            
-         // $_POST parameters        
+    {        
         $email = $request->request->get('_email');
         if (empty($email)) {
             return $this->render(
@@ -92,6 +90,7 @@ class LoginController extends Controller
 
         try{
             $user = $this->getDoctrine()->getManager()->getRepository('Webcook\Cms\SecurityBundle\Entity\User')->findOneBy(array('email'=> $email));
+        
             if($user === NULL){
                 return $this->render(
                     'WebcookCmsSecurityBundle:Auth:forgotPassword.html.twig',
@@ -109,6 +108,8 @@ class LoginController extends Controller
             $user->setPasswordResetToken($encrypt);
             $user->setPasswordResetExpiration($date);
             $from = 'no-reply@webcook.cz';
+
+            $this->getDoctrine()->getManager()->flush();
 
             // Create the Transport
             $message = \Swift_Message::newInstance()
@@ -160,8 +161,7 @@ class LoginController extends Controller
     }
 
     public function resetPasswordViewAction(Request $request)
-    { 
-        // $_POST parameters        
+    {        
         $token = $request->query->get('encrypt');
 
         if (empty($token)) {
@@ -229,7 +229,6 @@ class LoginController extends Controller
     }
 
     public function resetPasswordAction(Request $request){
-
         $password = $request->request->get('_password');
         $repeatPassword = $request->request->get('_repeatPassword');
         $token = $request->request->get('_token');
@@ -278,6 +277,8 @@ class LoginController extends Controller
                 $user->setPassword($password);
 
                 $user->setPasswordResetToken(null);
+
+                $this->getDoctrine()->getManager()->flush();
 
                 return $this->render(
                         'WebcookCmsSecurityBundle:Auth:login.html.twig',
