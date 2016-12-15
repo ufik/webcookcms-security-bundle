@@ -56,11 +56,12 @@ class ResourceControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCa
         $dest = __DIR__.'/../../src/Webcook/Cms/SecurityBundle/Controller/TestController.php';
         copy($source, $dest);
 
-        $this->client->request('GET', '/api/resources/synchronize');
+        $this->client->request('POST', '/api/resources/synchronizes');
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $resources = $this->em->getRepository('Webcook\Cms\SecurityBundle\Entity\Resource')->findAll();
-        $this->assertGreaterThan(4, $resources);
+        
+        $this->assertGreaterThan(5, $resources);
         unlink($dest);
     }
 

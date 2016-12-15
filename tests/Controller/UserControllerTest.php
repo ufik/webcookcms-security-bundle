@@ -138,7 +138,7 @@ class UserControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
         $this->assertCount(2, $users);
     }
 
-    public function testWrongPost()
+    public function testWrongPostUser()
     {
         $this->createTestClient();
 

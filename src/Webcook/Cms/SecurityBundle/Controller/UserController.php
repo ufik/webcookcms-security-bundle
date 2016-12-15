@@ -278,7 +278,7 @@ class UserController extends BaseRestController
             $oldPassword = $user->getPassword();
         }
 
-        $form = $this->createForm(new UserType(), $user);
+        $form = $this->createForm(UserType::class, $user);
 
         $form = $this->formSubmit($form, $method);
 

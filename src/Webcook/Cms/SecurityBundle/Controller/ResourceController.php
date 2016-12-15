@@ -16,6 +16,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Webcook\Cms\SecurityBundle\Authorization\Voter\WebcookCmsVoter;
 use Webcook\Cms\SecurityBundle\Common\SecurityHelper;
 use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Delete;
 
 /**
@@ -98,9 +99,9 @@ class ResourceController extends BaseRestController
      * @ApiDoc(
      *  description="Synchronize resources.",
      * )
-     * @Get(options={"i18n"=false})
+     * @Post(options={"i18n"=false})
      */
-    public function synchronizeResourcesAction()
+    public function postResourcesSynchronizeAction()
     {
         $this->checkPermission(WebcookCmsVoter::ACTION_INSERT);
 

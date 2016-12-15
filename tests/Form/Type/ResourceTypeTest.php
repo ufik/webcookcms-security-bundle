@@ -15,8 +15,7 @@ class ResourceTypeTest extends TypeTestCase
             'delete' => false,
         );
 
-        $type = new ResourceType();
-        $form = $this->factory->create($type);
+        $form = $this->factory->create(ResourceType::class);
 
         // submit the data to the form directly
         $form->submit($formData);

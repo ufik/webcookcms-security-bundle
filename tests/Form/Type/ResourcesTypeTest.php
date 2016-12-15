@@ -13,8 +13,7 @@ class ResourcesTypeTest extends TypeTestCase
             'test' => 'test',
         );
 
-        $type = new ResourcesType();
-        $form = $this->factory->create($type);
+        $form = $this->factory->create(ResourcesType::class);
 
         // submit the data to the form directly
         $form->submit($formData);

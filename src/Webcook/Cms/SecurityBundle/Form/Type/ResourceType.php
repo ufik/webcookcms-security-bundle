@@ -10,7 +10,9 @@ namespace Webcook\Cms\SecurityBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 /**
  * Form type of resource.
@@ -26,21 +28,21 @@ class ResourceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('view', 'checkbox')
-            ->add('edit', 'checkbox')
-            ->add('delete', 'checkbox')
-            ->add('id', 'integer');
+            ->add('view', CheckboxType::class)
+            ->add('edit', CheckboxType::class)
+            ->add('delete', CheckboxType::class)
+            ->add('id', IntegerType::class);
     }
 
     /**
      * {@inheritdoc}
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Webcook\Cms\SecurityBundle\Entity\RoleResource',
+            'data_class' => \Webcook\Cms\SecurityBundle\Entity\RoleResource::class,
             'csrf_protection'   => false,
         ));
     }
@@ -48,7 +50,7 @@ class ResourceType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'resource';
     }

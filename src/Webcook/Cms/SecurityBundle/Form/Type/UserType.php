@@ -10,9 +10,16 @@ namespace Webcook\Cms\SecurityBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * User form type.
@@ -28,20 +35,20 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', 'text', array(
+            ->add('username', TextType::class, array(
                 'constraints' => array(
                     new NotBlank(array( 'message' => 'security.user.form.name.required')),
                 ),
                 'label' => 'security.users.form.username',
             ))
-            ->add('email', 'email', array(
+            ->add('email', EmailType::class, array(
                 'constraints' => array(
                     new Email(array( 'message' => 'security.user.form.name.not_valid')),
                 ),
                 'label' => 'security.users.form.email',
             ))
-            ->add('password', 'repeated', array(
-                'type' => 'password',
+            ->add('password', RepeatedType::class, array(
+                'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
                 'options' => array('attr' => array('class' => 'password-field')),
                 'required' => false,
@@ -49,27 +56,27 @@ class UserType extends AbstractType
                 'second_options' => array('label' => 'Repeat Password'),
                 'label' => 'security.users.form.password',
             ))
-            ->add('isActive', 'checkbox', array(
+            ->add('isActive', CheckboxType::class, array(
                 'required' => false,
                 'label' => 'security.users.form.is_active',
             ))
-            ->add('roles', 'entity', array(
+            ->add('roles', EntityType::class, array(
                 'expanded' => true,
                 'multiple' => true,
                 'label' => 'security.users.form.roles',
                 'class' => 'Webcook\Cms\SecurityBundle\Entity\Role',
-            ))->add('version', 'hidden', array('mapped' => false));
+            ))->add('version', HiddenType::class, array('mapped' => false));
     }
 
     /**
      * {@inheritdoc}
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolverI $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Webcook\Cms\SecurityBundle\Entity\User',
+            'data_class' => \Webcook\Cms\SecurityBundle\Entity\User::class,
             'csrf_protection'   => false,
         ));
     }
@@ -79,7 +86,7 @@ class UserType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'user';
     }

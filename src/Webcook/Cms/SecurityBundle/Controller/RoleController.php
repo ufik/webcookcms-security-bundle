@@ -247,8 +247,8 @@ class RoleController extends BaseRestController
      */
     private function processRoleForm(Role $role, $method = 'POST')
     {
-        $form = $this->createForm(new RoleType(), $role);
-        $form->add('submit', 'submit', array('label' => 'security.roles.form.submit_button', 'attr' => array('class' => 'btn btn-primary btn-sm')));
+        $form = $this->createForm(RoleType::class, $role);
+        //$form->add('submit', 'submit', array('label' => 'security.roles.form.submit_button', 'attr' => array('class' => 'btn btn-primary btn-sm')));
 
         $form = $this->formSubmit($form, $method);
 

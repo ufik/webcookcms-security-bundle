@@ -10,8 +10,10 @@ namespace Webcook\Cms\SecurityBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
  * Role form type.
@@ -27,29 +29,29 @@ class RoleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array(
+            ->add('name', TextType::class, array(
                 'constraints' => array(
                     new NotBlank(array( 'message' => 'security.roles.form.name.required')),
                 ),
                 'label' => 'security.roles.form.name',
             ))
-            ->add('role', 'text', array(
+            ->add('role', TextType::class, array(
                 'constraints' => array(
                     new NotBlank(array( 'message' => 'security.roles.form.rolename.required')),
                 ),
                 'label' => 'security.roles.form.role',
-            ))->add('version', 'hidden', array('mapped' => false));
+            ))->add('version', HiddenType::class, array('mapped' => false));
     }
 
     /**
      * {@inheritdoc}
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Webcook\Cms\SecurityBundle\Entity\Role',
+            'data_class' => \Webcook\Cms\SecurityBundle\Entity\Role::class,
             'csrf_protection'   => false,
         ));
     }
@@ -59,7 +61,7 @@ class RoleType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'role';
     }

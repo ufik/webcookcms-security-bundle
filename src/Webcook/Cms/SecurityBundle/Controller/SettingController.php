@@ -143,7 +143,7 @@ class SettingController extends BaseRestController
      */
     private function processSettingForm($setting = null, $method = 'POST')
     {        
-        $form = $this->createForm(new SettingType(), $setting);
+        $form = $this->createForm(SettingType::class, $setting);
 
         $form = $this->formSubmit($form, $method);
 

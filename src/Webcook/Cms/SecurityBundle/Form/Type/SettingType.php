@@ -10,9 +10,10 @@ namespace Webcook\Cms\SecurityBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * User form type.
@@ -28,25 +29,25 @@ class SettingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array(
+            ->add('name', TextType::class, array(
                 'constraints' => array(
                     new NotBlank(array( 'message' => 'security.setting.form.name.required')),
                 ),
                 'label' => 'security.settings.form.name',
             ))
-            ->add('key', 'text', array(
+            ->add('key', TextType::class, array(
                 'constraints' => array(
                     new NotBlank(array( 'message' => 'security.setting.form.key.required')),
                 ),
                 'label' => 'security.settings.form.email',
             ))
-            ->add('value', 'text', array(
+            ->add('value', TextType::class, array(
                 'constraints' => array(
                     new NotBlank(array( 'message' => 'security.setting.form.name.required')),
                 ),
                 'label' => 'security.settings.form.password',
             ))
-            ->add('section', 'text', array(
+            ->add('section', TextType::class, array(
                 'constraints' => array(
                     new NotBlank(array( 'message' => 'security.setting.form.name.required')),
                 ),
@@ -58,12 +59,12 @@ class SettingType extends AbstractType
     /**
      * {@inheritdoc}
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Webcook\Cms\SecurityBundle\Entity\Setting',
+            'data_class' => \Webcook\Cms\SecurityBundle\Entity\Setting::class,
             'csrf_protection'   => false,
         ));
     }
@@ -73,7 +74,7 @@ class SettingType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'setting';
     }
