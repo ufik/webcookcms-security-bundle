@@ -4,7 +4,8 @@ php:
   - 7
   - hhvm
 
-before_script: 
+before_script:
+  - echo "memory_limit=3G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer self-update --preview
   - composer install
   
