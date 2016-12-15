@@ -5,7 +5,6 @@ php:
   - hhvm
 
 before_script: 
-  - dpkg -l | grep php
   - composer self-update --preview
   - composer install
   
