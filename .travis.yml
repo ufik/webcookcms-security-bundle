@@ -6,7 +6,7 @@ php:
 
 before_script: 
   - composer self-update --preview
-  - composer install
+  - php -d memory_limit=-1 composer install
   
 script:
   - ./runTests.sh coverage
