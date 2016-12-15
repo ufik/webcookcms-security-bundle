@@ -479,7 +479,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
     private function getMockSession()
     {
-        $session = $this->createMock('Symfony\Component\HttpFoundation\Session\Session', array('has', 'get', 'remove'));
+        $session = $this->getMockBuilder('Symfony\Component\HttpFoundation\Session\Session')->getMock();
 
         $session->expects($this->once())
             ->method('has')
