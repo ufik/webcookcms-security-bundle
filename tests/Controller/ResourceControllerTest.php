@@ -53,7 +53,7 @@ class ResourceControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCa
 
         //move test controller
         $source = __DIR__.'/../Temp/TestController.php';
-        $dest = __DIR__.'/../../src/Webcook/WebcookCms/SecurityBundle/Controller/TestController.php';
+        $dest = __DIR__.'/../../src/Webcook/Cms/SecurityBundle/Controller/TestController.php';
         copy($source, $dest);
 
         $this->client->request('GET', '/api/resources/synchronize');

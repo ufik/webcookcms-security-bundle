@@ -447,7 +447,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
     private function getMockTemplating($return = 'success')
     {
-        $templating = $this->createMock('Symfony\Bundle\FrameworkBundle\Templating\Engine', array('renderResponse'));
+        $templating = $this->createMock('Symfony\Bundle\FrameworkBundle\Templating\PhpEngine', array('renderResponse'));
 
         $templating->expects($this->any())
             ->method('renderResponse')
