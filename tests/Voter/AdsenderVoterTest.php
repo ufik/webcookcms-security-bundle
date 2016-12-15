@@ -42,9 +42,9 @@ class WebcookCmsVoterTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
 	private function mockTokenInterface()
 	{
-		$tokenInterface = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+		$tokenInterface = $this->createMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
 
-		$user = $this->getMock('Webcook\Cms\SecurityBundle\Entity', array('getRoles'));
+		$user = $this->createMock('Webcook\Cms\SecurityBundle\Entity', array('getRoles'));
 
 		$user->expects($this->any())
 			->method('getRoles')

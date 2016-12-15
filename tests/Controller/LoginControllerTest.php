@@ -20,7 +20,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->attributes = new ParameterBag();
 
@@ -42,7 +42,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->attributes = $attributes;
 
@@ -61,7 +61,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request', array('getSession'))
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->attributes = new ParameterBag();
 
@@ -86,7 +86,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $this->assertEquals('success', $controller->forgotPasswordAction($request));
     }
@@ -103,7 +103,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->request = new ParameterBag();
 
@@ -124,7 +124,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->request = new ParameterBag();
         $request->request->add(array('_email' => 'some@email.com'));
@@ -149,7 +149,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->request = new ParameterBag();
         $request->request->add(array('_email' => 'info@Webcook.com'));
@@ -174,7 +174,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->request = new ParameterBag();
         $request->request->add(array('_email' => 'info@Webcook.com'));
@@ -193,7 +193,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->query = new ParameterBag();
 
@@ -214,7 +214,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->query = new ParameterBag();
         $request->query->add(array('encrypt' => 'someToken'));
@@ -243,7 +243,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->query = new ParameterBag();
         $request->query->add(array('encrypt' => $token));
@@ -274,7 +274,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->query = new ParameterBag();
         $request->query->add(array('encrypt' => $token));
@@ -303,7 +303,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->query = new ParameterBag();
         $request->query->add(array('encrypt' => $token));
@@ -323,7 +323,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->request = new ParameterBag();
         $request->request->add(array());
@@ -343,7 +343,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->request = new ParameterBag();
         $request->request->add(array('_token' => 'sometoken'));
@@ -365,7 +365,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->request = new ParameterBag();
         $request->request->add(array('_token' => 'sometoken', '_password' => 'pass', '_repeatPassword' => 'pass'));
@@ -385,7 +385,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->request = new ParameterBag();
         $request->request->add(array('_token' => 'sometoken', '_password' => 'pass', '_repeatPassword' => 'passe'));
@@ -412,7 +412,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $request->request = new ParameterBag();
         $request->request->add(array('_token' => $token, '_password' => 'pass', '_repeatPassword' => 'pass'));
@@ -435,7 +435,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
     {
         $router = $this->getMockBuilder('Symfony\Component\Routing\Router', array('generate'))
                      ->disableOriginalConstructor()
-                     ->getMock();
+                     ->createMock();
 
         $router->expects($this->once())
             ->method('generate')
@@ -447,7 +447,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
     private function getMockTemplating($return = 'success')
     {
-        $templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\Engine', array('renderResponse'));
+        $templating = $this->createMock('Symfony\Bundle\FrameworkBundle\Templating\Engine', array('renderResponse'));
 
         $templating->expects($this->any())
             ->method('renderResponse')
@@ -462,7 +462,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
         $mailer = $this->getMockBuilder('Swift_Mailer')
                 ->disableOriginalConstructor()
                 ->setMethods(array('send'))
-                ->getMock();
+                ->createMock();
 
         $mailer->expects($this->any())
             ->method('send')
@@ -474,7 +474,7 @@ class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
     private function getMockSession()
     {
-        $session = $this->getMock('Symfony\Component\HttpFoundation\Session', array('has', 'get', 'remove'));
+        $session = $this->createMock('Symfony\Component\HttpFoundation\Session', array('has', 'get', 'remove'));
 
         $session->expects($this->once())
             ->method('has')
