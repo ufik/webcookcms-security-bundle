@@ -12,7 +12,6 @@
     ],
     "require": {
         "webcookcms/common-bundle": "~1.0@dev",
-        "scheb/two-factor-bundle": "~2.8",
         "lexik/jwt-authentication-bundle": "^2.0"
     },
     "require-dev": {

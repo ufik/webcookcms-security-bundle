@@ -68,66 +68,6 @@ class UserController extends BaseRestController
     }
 
     /**
-     * Get user secrect key.
-     *
-     * @param int $id Id of the desired user.
-     *`
-     * @ApiDoc(
-     *  description="Return user secrect.",
-     *  parameters={
-     *      {"name"="userId", "dataType"="integer", "required"=true, "description"="User id."}
-     *  }
-     * )
-     * @Get(options={"i18n"=false})
-     */
-    public function getUserKeyAction($id)
-    {
-        $this->checkPermission(WebcookCmsVoter::ACTION_EDIT);
-
-        $secret = $this->get("scheb_two_factor.security.google_authenticator")->generateSecret();
-
-        $user = $this->getUserById($id);
-        $user->setGoogleAuthenticatorSecret($secret);
-
-        $this->getDoctrine()->getManager()->persist($user);
-        $this->getDoctrine()->getManager()->flush();
-
-        $view = $this->view(['google_authenticator_secret' => $secret], 200);
-
-        return $this->handleView($view);
-    }
-
-
-    /**
-     * Get user QR code.
-     *
-     * @param int $id Id of the desired user.
-     *`
-     * @ApiDoc(
-     *  description="Return user QR code.",
-     *  parameters={
-     *      {"name"="userId", "dataType"="integer", "required"=true, "description"="User id."}
-     *  }
-     * )
-     * @Get(options={"i18n"=false})
-     */
-    public function getUserQrcodeAction($id)
-    {          
-        $this->checkPermission(WebcookCmsVoter::ACTION_VIEW);
-
-        $user = $this->getUserById($id);
-
-        $url = '';// i set it to empty rather than null because,null giving an empty array, frontend expecting obj. Work around if you think something is wrong
-        if ($user->getGoogleAuthenticatorSecret()) {
-            $url = $this->get("scheb_two_factor.security.google_authenticator")->getUrl($user); 
-        }       
-
-        $view = $this->view(['qrcode' => $url], 200); 
-
-        return $this->handleView($view);
-    }
-
-    /**
      * Create a new user.
      *
      * @ApiDoc(
@@ -216,33 +156,6 @@ class UserController extends BaseRestController
         $this->getDoctrine()->getManager()->flush();
 
         $view = $this->getViewWithMessage(array(), 200, 'User has been deleted.');
-
-        return $this->handleView($view);
-    }
-
-     /**
-     * Delete user secrect key.
-     *
-     * @param int $id Id of the desired user.
-     *`
-     * @ApiDoc(
-     *  description="Delete user secrect.",
-     *  parameters={
-     *      {"name"="userId", "dataType"="integer", "required"=true, "description"="User id."}
-     *  }
-     * )
-     * @Delete(options={"i18n"=false})
-     */
-     public function deleteUserKeyAction($id)
-     {
-        $this->checkPermission(WebcookCmsVoter::ACTION_EDIT);
-
-        $user = $this->getUserById($id);
-        $user->setGoogleAuthenticatorSecret(null);
-
-        $this->getDoctrine()->getManager()->flush();
-
-        $view = $this->getViewWithMessage(array(), 200, 'User secret key has been deleted.');
 
         return $this->handleView($view);
     }

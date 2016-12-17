@@ -214,34 +214,4 @@ class UserControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
 
         $this->assertContains('"id":1,"version":1,"username":"admin"', $content);
     }
-
-    public function testGetSecretKey()
-    {
-        $this->createTestClient();
-
-        $this->client->request('GET', '/api/users/1/key');
-
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertContains('google_authenticator_secret', $this->client->getResponse()->getContent());
-    }
-
-    public function testGetQrCode()
-    {
-        $this->createTestClient();
-
-        $this->client->request('GET', '/api/users/1/qrcode');
-
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertContains('qrcode', $this->client->getResponse()->getContent());
-    }
-
-    public function testDeleteSecretKey()
-    {
-        $this->createTestClient();
-
-        $this->client->request('DELETE', '/api/users/1/key');
-
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertContains('deleted', $this->client->getResponse()->getContent());
-    }
 }

@@ -63,7 +63,6 @@ class UserTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
         $this->assertEquals($user['email'], $newUser['email']);
         $this->assertEquals($user['roles'], $newUser['roles']);
         $this->assertEquals($user['isActive'], $newUser['isActive']);
-        $this->assertEquals($user['googleAuthenticatorSecret'], $newUser['googleAuthenticatorSecret']);
         $this->assertEquals($user['id'], $newUser['id']);
         $this->assertEquals($user['version'], $newUser['version']);
     }

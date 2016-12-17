@@ -13,3 +13,7 @@ webcook_cms_security_resources:
 webcook_cms_security_settings:
     resource: "@WebcookCmsSecurityBundle/Controller/SettingController.php"
     type:     rest
+
+webcook_cms_security_login:
+    resource: "@WebcookCmsSecurityBundle/Controller/LoginController.php"
+    type:     rest

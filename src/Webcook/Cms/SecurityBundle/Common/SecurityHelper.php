@@ -34,7 +34,9 @@ class SecurityHelper
 
         $added = 0;
         foreach ($finder as $file) {
-            if (strpos(file_get_contents($file->getRealPath()), 'extends BaseRestController') !== false) {
+            $fileContent = file_get_contents($file->getRealPath());
+            if (strpos($fileContent, 'extends BaseRestController') !== false
+            && strpos($fileContent, 'implements PublicControllerInterface') === false) {
                 $resources[] = self::extractName($file->getRealPath());
             }
         }

@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Webcook\Cms\CommonBundle\Base\BasicEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
 
 /**
  * System user entity.
@@ -20,7 +19,7 @@ use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
  * @ORM\Table(name="SecurityUser")
  * @ORM\Entity(repositoryClass="Webcook\Cms\SecurityBundle\Entity\UserRepository")
  */
-class User extends BasicEntity implements UserInterface, TwoFactorInterface,\Serializable
+class User extends BasicEntity implements UserInterface,\Serializable
 {
     /**
      * Username of the user.
@@ -71,12 +70,6 @@ class User extends BasicEntity implements UserInterface, TwoFactorInterface,\Ser
     private $isActive;
 
     /**
-     * Google authentication code
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $googleAuthenticatorSecret;
-
-    /**
      * @ORM\OneToMany(targetEntity="Setting", mappedBy="user", cascade={"persist"})
      */
     private $settings;
@@ -109,9 +102,6 @@ class User extends BasicEntity implements UserInterface, TwoFactorInterface,\Ser
         $language->setUser($this);
 
         $this->settings->add($language);
-
-        // may not be needed, see section on salt below
-        //$this->salt = md5(uniqid(null, true));
     }
 
     /**
@@ -311,22 +301,6 @@ class User extends BasicEntity implements UserInterface, TwoFactorInterface,\Ser
     public function removeRoles()
     {
         $this->roles->clear();
-    }
-
-    /**
-     * Get google authentication.
-     *
-     */
-    public function getGoogleAuthenticatorSecret() {
-        return $this->googleAuthenticatorSecret;
-    }
-
-    /**
-     * Set google authentication.
-     *
-     */
-    public function setGoogleAuthenticatorSecret($googleAuthenticatorSecret) {
-        $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
     }
 
     /**

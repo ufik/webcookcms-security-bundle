@@ -8,321 +8,155 @@
 
 namespace Webcook\Cms\SecurityBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Webcook\Cms\CommonBundle\Base\BaseRestController;
+use Webcook\Cms\SecurityBundle\Controller\PublicControllerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 use Webcook\Cms\SecurityBundle\Entity\User;
-use Webcook\Cms\SecurityBundle\Form\Type\UserType;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\Get;
 
 /**
  * Login controller.
  */
-class LoginController extends Controller
+class LoginController extends BaseRestController implements PublicControllerInterface
 {
     private $mailer;
 
-    /**
-     * @TODO refactor!
-     * Login form action.
+     /**
+     * Send an email with a link to reset user's password.
      *
-     * @param Request $request
-     *
-     * @return
+     * @ApiDoc(
+     *  description="Send an email with a link to reset user's password."
+     * )
+     * @Post("password/email/reset", options={"i18n"=false})
      */
-    public function loginAction(Request $request)
-    {
-        $session = $request->getSession();
+    public function resetPasswordEmailAction(Request $request): Response
+    {        
+        $email = $request->request->get('email');
+        $user  = $this->getEntityManager()->getRepository('Webcook\Cms\SecurityBundle\Entity\User')->findOneBy(array('email'=> $email));
 
-        // get the login error if there is one
-        if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(
-                Security::AUTHENTICATION_ERROR
-            );
-        } elseif (null !== $session && $session->has(Security::AUTHENTICATION_ERROR)) {
-            $error = $session->get(Security::AUTHENTICATION_ERROR);
-            $session->remove(Security::AUTHENTICATION_ERROR);
+        if($user === null) {
+            $view = $this->getViewWithMessage(null, 404, 'This email does not exist. Please enter a valid email.');
+            return $this->handleView($view);
+        }
+
+        $resetLink = $this->setResetToken($user);
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Password Reset')
+            ->setFrom('no-reply@webcook.cz')
+            ->setTo($email)
+            ->setBody($this->render(
+                'WebcookCmsSecurityBundle:Auth:emailTemplate.html.twig',
+                    array(
+                        'user'      => $user->getUsername(),
+                        'resetLink' => $resetLink
+                    )
+                ))
+            ->setContentType("text/html");
+
+        $result = $this->get('mailer')->send($message);
+        if($result) {
+            $view = $this->getViewWithMessage(null, 200, 'Your password reset link was sent to your e-mail address.');
         } else {
-            $error = '';
+            $view = $this->getViewWithMessage(null, 400, 'Cannot send an email.');
         }
 
-        // last username entered by the user
-        $lastUsername = (null === $session) ? '' : $session->get(Security::LAST_USERNAME);
-
-        return $this->render(
-            'WebcookCmsSecurityBundle:Auth:login.html.twig',
-            array(
-                // last username entered by the user
-                'last_username' => $lastUsername,
-                'error'         => $error,
-                'success' => null
-            )
-        );
+        return $this->handleView($view);
     }
 
-    public function forgotPasswordAction(Request $request)
+     /**
+     * Reset password view.
+     *
+     * @ApiDoc(
+     *  description="Reset password view."
+     * )
+     * @Get("password/reset", options={"i18n"=false})
+     */
+    public function resetPasswordGetAction(Request $request): Response
     {
-        return $this->render(
-            'WebcookCmsSecurityBundle:Auth:forgotPassword.html.twig',
-            array(
-                'success'         => null,
-                'error'         => null,
-            )
-        );      
+        $token = $request->query->get('token');
+        $user  = $this->getEntityManager()->getRepository('Webcook\Cms\SecurityBundle\Entity\User')->findOneBy(array('passwordResetToken'=> $token));
+        if($user === null || empty($token)){
+            $view = $this->getViewWithMessage(null, 404, 'This token is invalid.');
+            return $this->handleView($view);
+        }
+
+        $dateDiff = date_diff(
+            new \DateTime(),
+            $user->getPasswordResetExpiration()
+        );
+
+        $view          = $this->getViewWithMessage(null, 400, 'This token has expired.');
+        $diffInSeconds = $dateDiff->i * 60 + $dateDiff->s;
+        if($diffInSeconds < 600 && $dateDiff->y == 0 && $dateDiff->m == 0 && $dateDiff->d == 0 && $dateDiff->h == 0) {
+            $view = $this->getViewWithMessage(null, 200, 'Please enter your new password.');
+        }
+
+        return $this->handleView($view);
     }
 
     /**
-     * Send an email with link to reset password.
+     * Reset password action.
      *
+     * @ApiDoc(
+     *  description="Reset password action."
+     * )
+     * @Post("password/reset", options={"i18n"=false})
      */
-    public function resetPasswordEmailAction(Request $request)
-    {        
-        $email = $request->request->get('_email');
-        if (empty($email)) {
-            return $this->render(
-                'WebcookCmsSecurityBundle:Auth:forgotPassword.html.twig',
-                array(
-                    // last username entered by the user
-                    'success' => null,
-                    'error' => 'This email does not exist. Please enter a valid email.',
-                )
-            );
-        }
-
-        try{
-            $user = $this->getDoctrine()->getManager()->getRepository('Webcook\Cms\SecurityBundle\Entity\User')->findOneBy(array('email'=> $email));
-        
-            if($user === NULL){
-                return $this->render(
-                    'WebcookCmsSecurityBundle:Auth:forgotPassword.html.twig',
-                    array(
-                        // last username entered by the user
-                        'success' => null,
-                        'error' => 'This email does not exist. Please enter a valid email.',
-                    )
-                );
-            }
-
-            $encrypt = md5(uniqid(mt_rand(), true));            
-            $resetLink = $this->generateUrl('_security_resetPasswordView',array('encrypt' => $encrypt), true);
-            $date = new \DateTime();
-            $user->setPasswordResetToken($encrypt);
-            $user->setPasswordResetExpiration($date);
-            $from = 'no-reply@webcook.cz';
-
-            $this->getDoctrine()->getManager()->flush();
-
-            // Create the Transport
-            $message = \Swift_Message::newInstance()
-                ->setSubject('Password Reset')
-                ->setFrom($from)
-                ->setTo($email)
-                ->setBody($this->render(
-                    'WebcookCmsSecurityBundle:Auth:emailTemplate.html.twig',
-                        array(
-                            'user' => $user->getUsername(),
-                            'resetLink' => $resetLink
-                        )
-                    ))
-                ->setContentType("text/html");      
-
-            $result = $this->getMailer()->send($message);
-
-            if($result) {
-                return $this->render(
-                    'WebcookCmsSecurityBundle:Auth:forgotPassword.html.twig',
-                    array(
-                        // last username entered by the user
-                        'success' => "Your password reset link was sent to your e-mail address.",
-                        'error' => null,
-                        //'' => 'does not exists. Please try again',
-                    )
-                );
-            } else {
-                return $this->render(
-                    'WebcookCmsSecurityBundle:Auth:forgotPassword.html.twig',
-                    array(
-                        // last username entered by the user
-                        'success' => null,
-                        'error' => 'Something went wrong on our side. Please try again',
-                    )
-                );
-            }  
-
-        } catch(\Exception $e){
-             return $this->render(
-                'WebcookCmsSecurityBundle:Auth:forgotPassword.html.twig',
-                array(
-                    // last username entered by the user
-                    'success' => null,
-                    'error' => 'This email does not exist. Please enter a valid email.',
-                )
-            );
-        }        
-    }
-
-    public function resetPasswordViewAction(Request $request)
-    {        
-        $token = $request->query->get('encrypt');
-
-        if (empty($token)) {
-            return $this->render(
-                'WebcookCmsSecurityBundle:Auth:invalid.html.twig',
-                array(
-                    // last username entered by the user
-                    'success' => null,
-                    'error' => 'This link is invalid.',
-                )
-            );
-        }
-
-        try {
-            $user = $this->getDoctrine()->getManager()->getRepository('Webcook\Cms\SecurityBundle\Entity\User')->findOneBy(array('passwordResetToken'=> $token));
-            if($user === NULL){
-                return $this->render(
-                    'WebcookCmsSecurityBundle:Auth:invalid.html.twig',
-                    array(
-                        // last username entered by the user
-                        'success' => null,
-                        'error' => 'This link is invalid.',
-                    )
-                );
-            }
-
-            $date = new \DateTime();
-            $expiryTime = $user->getPasswordResetExpiration();
-
-            $result = date_diff($date,$expiryTime);
-
-            $diff = $result->i * 60 + $result->s;
-
-            if($diff < 600 && $result->y == 0 && $result->m == 0 && $result->d == 0 && $result->h == 0) {
-                return $this->render(
-                    'WebcookCmsSecurityBundle:Auth:resetPassword.html.twig',
-                    array(
-                        // last username entered by the user
-                        'token' => $token,
-                        'success' => 'Please enter your new password.',
-                        'error' => null,
-                    )
-                );
-            } else {
-                return $this->render(
-                    'WebcookCmsSecurityBundle:Auth:invalid.html.twig',
-                    array(
-                        // last username entered by the user
-                        'success' => null,
-                        'error' => 'This link has expired.',
-                    )
-                );
-            }
-        } catch(\Exception $e){
-            return $this->render(
-                'WebcookCmsSecurityBundle:Auth:invalid.html.twig',
-                array(
-                    // last username entered by the user
-                    'success' => null,
-                    'error' => 'This link is invalid.',
-                )
-            );
-        }        
-
-    }
-
-    public function resetPasswordAction(Request $request){
-        $password = $request->request->get('_password');
-        $repeatPassword = $request->request->get('_repeatPassword');
-        $token = $request->request->get('_token');
-
-        if (empty($token) ) {
-            return $this->render(
-                'WebcookCmsSecurityBundle:Auth:invalid.html.twig',
-                array(
-                    // last username entered by the user
-                    'success' => null,
-                    'error' => 'This link is invalid.',
-                )
-            );
-        }
-
-        if(empty($password) || empty($repeatPassword)){
-            return $this->render(
-                'WebcookCmsSecurityBundle:Auth:resetPassword.html.twig',
-                array(
-                        // last username entered by the user
-                    'token' => $token,
-                    'success' => null,
-                    'error' => 'Passwords can\'t be empty',
-                    )
-            );
+    public function resetPasswordPostAction(Request $request): Response
+    {
+        $password       = $request->request->get('password');
+        $repeatPassword = $request->request->get('repeatPassword');
+        $token          = $request->request->get('token');
+        if(empty($password) || empty($repeatPassword) || empty($token)){
+            $view = $this->getViewWithMessage(null, 400, 'Passwords and token can\'t be empty.');
+            return $this->handleView($view);
         }
 
         if($password == $repeatPassword) {
-            try {
-                $user = $this->getDoctrine()->getManager()->getRepository('Webcook\Cms\SecurityBundle\Entity\User')->findOneBy(array('passwordResetToken'=> $token));     
-                
-                if($user === NULL){
-                    return $this->render(
-                        'WebcookCmsSecurityBundle:Auth:invalid.html.twig',
-                        array(
-                            // last username entered by the user
-                            'success' => null,
-                            'error' => 'This link is invalid.',
-                        )
-                    );
-                }
-
-                $factory = $this->container->get('security.encoder_factory');
-                $encoder = $factory->getEncoder($user);
-                $password = $encoder->encodePassword($password, $user->getSalt());
-                $user->setPassword($password);
-
-                $user->setPasswordResetToken(null);
-
-                $this->getDoctrine()->getManager()->flush();
-
-                return $this->render(
-                        'WebcookCmsSecurityBundle:Auth:login.html.twig',
-                        array(
-                            // last username entered by the user
-                            'success' => 'Please login with your new password.',
-                            'error' => null,
-                        )
-                    );
-            } catch(\Exception $e){
-                 return $this->render(
-                    'WebcookCmsSecurityBundle:Auth:invalid.html.twig',
-                    array(
-                        // last username entered by the user
-                        'success' => null,
-                        'error' => 'This link is invalid.',
-                    )
-                );
+            $user = $this->getEntityManager()->getRepository('Webcook\Cms\SecurityBundle\Entity\User')->findOneBy(array('passwordResetToken'=> $token));
+            if($user === null){
+                $view = $this->getViewWithMessage(null, 404, 'This token is invalid.');
+                return $this->handleView($view);
             }
-           
-        } else {
-            return $this->render(
-                'WebcookCmsSecurityBundle:Auth:resetPassword.html.twig',
-                array(
-                    // last username entered by the user
-                    'token' => $token,
-                    'success' => null,
-                    'error' => 'Your passwords don\'t match.',
-                )
-            );
-        }
-    }
 
-    public function setMailer($mailer)
-    {
-        $this->mailer = $mailer;
-    }
+            $this->setUserPassword($user, $password);
 
-    private function getMailer()
-    {
-        if(!$this->mailer) {
-            return $this->get('mailer');
+            $view = $this->getViewWithMessage(null, 200, 'Password has been changed.');
+            return $this->handleView($view);
         }
 
-        return $this->mailer;
+        $view = $this->getViewWithMessage(null, 400, 'Passwords dont\'t match.');
+        return $this->handleView($view);
+    }
+
+    private function setUserPassword(User $user, String $password)
+    {
+        $factory  = $this->container->get('security.encoder_factory');
+        $encoder  = $factory->getEncoder($user);
+        $password = $encoder->encodePassword($password, $user->getSalt());
+
+        $user->setPassword($password);
+        $user->setPasswordResetToken(null);
+        $user->setPasswordResetExpiration(null);
+
+        $this->getEntityManager()->flush();
+    }
+
+    private function setResetToken(User $user): string
+    {
+        $token     = md5(uniqid(mt_rand(), true));            
+        $resetLink = $this->generateUrl('reset_password_get', array('token' => $token), true);
+        $date      = new \DateTime();
+
+        $user->setPasswordResetToken($token);
+        $user->setPasswordResetExpiration($date);
+
+        $this->getEntityManager()->flush();
+
+        return $resetLink;
     }
 }
