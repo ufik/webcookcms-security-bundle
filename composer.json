@@ -14,8 +14,6 @@
         "webcookcms/common-bundle": "~1.0@dev",
         "lexik/jwt-authentication-bundle": "^2.0"
     },
-    "require-dev": {
-    },
     "autoload": {
         "psr-0": { "Webcook\\Cms\\SecurityBundle": "src/" }
     },
