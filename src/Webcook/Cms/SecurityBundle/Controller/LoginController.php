@@ -23,7 +23,6 @@ use FOS\RestBundle\Controller\Annotations\Get;
  */
 class LoginController extends BaseRestController implements PublicControllerInterface
 {
-    private $mailer;
 
      /**
      * Send an email with a link to reset user's password.
