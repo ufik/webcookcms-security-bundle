@@ -6,6 +6,7 @@
          backupGlobals="false"
          colors="true"
          bootstrap="vendor/webcookcms/common-bundle/src/Webcook/Cms/CommonBundle/Tests/bootstrap.php"
+	 convertNoticesToExceptions="false"
 >
     <testsuites>
         <testsuite name="Project Test Suite">
