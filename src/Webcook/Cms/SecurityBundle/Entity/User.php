@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="SecurityUser")
  * @ORM\Entity(repositoryClass="Webcook\Cms\SecurityBundle\Entity\UserRepository")
  */
-class User extends BasicEntity implements UserInterface,\Serializable
+class User extends BasicEntity implements UserInterface, \Serializable
 {
     /**
      * Username of the user.
@@ -207,7 +207,7 @@ class User extends BasicEntity implements UserInterface,\Serializable
     /**
      * Sets the value of email.
      *
-     * @param mixed $email the email
+     * @param string $email the email
      *
      * @return self
      */
@@ -245,7 +245,7 @@ class User extends BasicEntity implements UserInterface,\Serializable
     /**
      * Sets the value of username.
      *
-     * @param mixed $username the username
+     * @param string $username the username
      *
      * @return self
      */
@@ -306,7 +306,7 @@ class User extends BasicEntity implements UserInterface,\Serializable
     /**
      * Gets the value of settings.
      *
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getSettings()
     {
@@ -316,17 +316,17 @@ class User extends BasicEntity implements UserInterface,\Serializable
     public function getSettingsByName($name)
     {
         foreach ($this->getSettings() as &$value) {
-            if($value->getName() == $name) {
+            if ($value->getName() == $name) {
                 return $value;
             }
         }
     }
 
-     /**
-     * Get passwordResetToken.
-     *
-     * @inheritDoc
-     */
+        /**
+         * Get passwordResetToken.
+         *
+         * @inheritDoc
+         */
     public function getPasswordResetToken()
     {
         return $this->passwordResetToken;
@@ -335,7 +335,7 @@ class User extends BasicEntity implements UserInterface,\Serializable
     /**
      * Sets the value of password reset token.
      *
-     * @param mixed $passwordResetToken the passwordResetToken
+     * @param null|string $passwordResetToken the passwordResetToken
      *
      * @return self
      */
@@ -359,7 +359,7 @@ class User extends BasicEntity implements UserInterface,\Serializable
     /**
      * Sets the value of password reset token.
      *
-     * @param mixed $passwordResetExpiration the passwordResetExpiration
+     * @param null|\DateTime $passwordResetExpiration the passwordResetExpiration
      *
      * @return self
      */

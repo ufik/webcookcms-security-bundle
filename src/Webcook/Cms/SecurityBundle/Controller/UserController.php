@@ -178,7 +178,7 @@ class UserController extends BaseRestController
     /**
      * Return form if is not valid, otherwise process form and return role object.
      *
-     * @param [type] $user
+     * @param User $user
      * @param string $method
      *
      * @return [type]
@@ -223,7 +223,6 @@ class UserController extends BaseRestController
      *
      * @param int     $id              [description]
      * @param int     $expectedVersion [description]
-     * @param boolean $saveLockVersion [description]
      *
      * @return User [description]
      */

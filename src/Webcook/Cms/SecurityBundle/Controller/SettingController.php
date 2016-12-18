@@ -17,8 +17,6 @@ use Webcook\Cms\SecurityBundle\Authorization\Voter\WebcookCmsVoter;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Put;
-use FOS\RestBundle\Controller\Annotations\Delete;
-use Doctrine\DBAL\LockMode;
 
 /**
  * REST api controller - setting management.
@@ -136,7 +134,7 @@ class SettingController extends BaseRestController
     /**
      * Return form if is not valid, otherwise process form and return setting object.
      *
-     * @param [type] $setting
+     * @param Setting $setting
      * @param string $method
      *
      * @return [type]
@@ -167,8 +165,6 @@ class SettingController extends BaseRestController
      *
      *
      * @param int     $id              [description]
-     * @param int     $expectedVersion [description]
-     * @param boolean $saveLockVersion [description]
      *
      * @return Setting [description]
      */

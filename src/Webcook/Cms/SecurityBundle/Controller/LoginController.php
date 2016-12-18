@@ -12,7 +12,6 @@ use Webcook\Cms\CommonBundle\Base\BaseRestController;
 use Webcook\Cms\SecurityBundle\Controller\PublicControllerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Security;
 use Webcook\Cms\SecurityBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations\Post;
@@ -24,20 +23,20 @@ use FOS\RestBundle\Controller\Annotations\Get;
 class LoginController extends BaseRestController implements PublicControllerInterface
 {
 
-     /**
-     * Send an email with a link to reset user's password.
-     *
-     * @ApiDoc(
-     *  description="Send an email with a link to reset user's password."
-     * )
-     * @Post("password/email/reset", options={"i18n"=false})
-     */
+        /**
+         * Send an email with a link to reset user's password.
+         *
+         * @ApiDoc(
+         *  description="Send an email with a link to reset user's password."
+         * )
+         * @Post("password/email/reset", options={"i18n"=false})
+         */
     public function resetPasswordEmailAction(Request $request): Response
     {        
         $email = $request->request->get('email');
         $user  = $this->getEntityManager()->getRepository('Webcook\Cms\SecurityBundle\Entity\User')->findOneBy(array('email'=> $email));
 
-        if($user === null) {
+        if ($user === null) {
             $view = $this->getViewWithMessage(null, 404, 'This email does not exist. Please enter a valid email.');
             return $this->handleView($view);
         }
@@ -57,7 +56,7 @@ class LoginController extends BaseRestController implements PublicControllerInte
             ->setContentType("text/html");
 
         $result = $this->get('mailer')->send($message);
-        if($result) {
+        if ($result) {
             $view = $this->getViewWithMessage(null, 200, 'Your password reset link was sent to your e-mail address.');
         } else {
             $view = $this->getViewWithMessage(null, 400, 'Cannot send an email.');
@@ -66,19 +65,19 @@ class LoginController extends BaseRestController implements PublicControllerInte
         return $this->handleView($view);
     }
 
-     /**
-     * Reset password view.
-     *
-     * @ApiDoc(
-     *  description="Reset password view."
-     * )
-     * @Get("password/reset", options={"i18n"=false})
-     */
+        /**
+         * Reset password view.
+         *
+         * @ApiDoc(
+         *  description="Reset password view."
+         * )
+         * @Get("password/reset", options={"i18n"=false})
+         */
     public function resetPasswordGetAction(Request $request): Response
     {
         $token = $request->query->get('token');
         $user  = $this->getEntityManager()->getRepository('Webcook\Cms\SecurityBundle\Entity\User')->findOneBy(array('passwordResetToken'=> $token));
-        if($user === null || empty($token)){
+        if ($user === null || empty($token)) {
             $view = $this->getViewWithMessage(null, 404, 'This token is invalid.');
             return $this->handleView($view);
         }
@@ -90,7 +89,7 @@ class LoginController extends BaseRestController implements PublicControllerInte
 
         $view          = $this->getViewWithMessage(null, 400, 'This token has expired.');
         $diffInSeconds = $dateDiff->i * 60 + $dateDiff->s;
-        if($diffInSeconds < 600 && $dateDiff->y == 0 && $dateDiff->m == 0 && $dateDiff->d == 0 && $dateDiff->h == 0) {
+        if ($diffInSeconds < 600 && $dateDiff->y == 0 && $dateDiff->m == 0 && $dateDiff->d == 0 && $dateDiff->h == 0) {
             $view = $this->getViewWithMessage(null, 200, 'Please enter your new password.');
         }
 
@@ -110,14 +109,14 @@ class LoginController extends BaseRestController implements PublicControllerInte
         $password       = $request->request->get('password');
         $repeatPassword = $request->request->get('repeatPassword');
         $token          = $request->request->get('token');
-        if(empty($password) || empty($repeatPassword) || empty($token)){
+        if (empty($password) || empty($repeatPassword) || empty($token)) {
             $view = $this->getViewWithMessage(null, 400, 'Passwords and token can\'t be empty.');
             return $this->handleView($view);
         }
 
-        if($password == $repeatPassword) {
+        if ($password == $repeatPassword) {
             $user = $this->getEntityManager()->getRepository('Webcook\Cms\SecurityBundle\Entity\User')->findOneBy(array('passwordResetToken'=> $token));
-            if($user === null){
+            if ($user === null) {
                 $view = $this->getViewWithMessage(null, 404, 'This token is invalid.');
                 return $this->handleView($view);
             }

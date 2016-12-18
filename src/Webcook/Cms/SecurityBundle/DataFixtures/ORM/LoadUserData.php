@@ -58,7 +58,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface, Ordered
     /**
      * Add admin user.
      *
-     * @param [type] $manager [description]
+     * @param ObjectManager $manager [description]
      */
     private function addAdmin($manager)
     {
@@ -81,7 +81,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface, Ordered
     /**
      * Add editor user.
      *
-     * @param [type] $manager [description]
+     * @param ObjectManager $manager [description]
      */
     private function addEditor($manager)
     {
@@ -104,7 +104,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface, Ordered
     /**
      * Add Test user.
      *
-     * @param [type] $manager [description]
+     * @param ObjectManager $manager [description]
      */
     private function addTestUser($manager)
     {
