@@ -82,7 +82,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     /**
      * {@inheritdoc}
      *
-     * @param  [type] $class [description]
+     * @param  string $class [description]
      * @return [type] [description]
      */
     public function supportsClass($class)

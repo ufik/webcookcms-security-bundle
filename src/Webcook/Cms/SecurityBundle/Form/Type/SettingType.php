@@ -31,25 +31,25 @@ class SettingType extends AbstractType
         $builder
             ->add('name', TextType::class, array(
                 'constraints' => array(
-                    new NotBlank(array( 'message' => 'security.setting.form.name.required')),
+                    new NotBlank(array('message' => 'security.setting.form.name.required')),
                 ),
                 'label' => 'security.settings.form.name',
             ))
             ->add('key', TextType::class, array(
                 'constraints' => array(
-                    new NotBlank(array( 'message' => 'security.setting.form.key.required')),
+                    new NotBlank(array('message' => 'security.setting.form.key.required')),
                 ),
                 'label' => 'security.settings.form.email',
             ))
             ->add('value', TextType::class, array(
                 'constraints' => array(
-                    new NotBlank(array( 'message' => 'security.setting.form.name.required')),
+                    new NotBlank(array('message' => 'security.setting.form.name.required')),
                 ),
                 'label' => 'security.settings.form.password',
             ))
             ->add('section', TextType::class, array(
                 'constraints' => array(
-                    new NotBlank(array( 'message' => 'security.setting.form.name.required')),
+                    new NotBlank(array('message' => 'security.setting.form.name.required')),
                 ),
                 'label' => 'security.settings.form.section',
             ));

@@ -73,7 +73,7 @@ class Role extends BasicEntity implements RoleInterface
     /**
      * Sets the value of name.
      *
-     * @param mixed $name the name
+     * @param string $name the name
      *
      * @return self
      */
@@ -87,7 +87,7 @@ class Role extends BasicEntity implements RoleInterface
     /**
      * Sets the value of role.
      *
-     * @param mixed $role the role
+     * @param string $role the role
      *
      * @return self
      */

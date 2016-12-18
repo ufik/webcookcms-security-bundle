@@ -68,7 +68,7 @@ class RoleResource extends BasicEntity
      *
      * @param [type] $attribute [description]
      *
-     * @return boolean [description]
+     * @return boolean|null [description]
      */
     public function isGranted($attribute)
     {
@@ -98,7 +98,7 @@ class RoleResource extends BasicEntity
     /**
      * Gets the value of view.
      *
-     * @return mixed
+     * @return boolean
      */
     public function getView()
     {
@@ -122,7 +122,7 @@ class RoleResource extends BasicEntity
     /**
      * Gets the value of edit.
      *
-     * @return mixed
+     * @return boolean
      */
     public function getEdit()
     {
@@ -132,7 +132,7 @@ class RoleResource extends BasicEntity
     /**
      * Sets the value of edit.
      *
-     * @param mixed $edit the edit
+     * @param boolean $edit the edit
      *
      * @return self
      */
@@ -146,7 +146,7 @@ class RoleResource extends BasicEntity
     /**
      * Gets the value of delete.
      *
-     * @return mixed
+     * @return boolean
      */
     public function getDelete()
     {
@@ -156,7 +156,7 @@ class RoleResource extends BasicEntity
     /**
      * Sets the value of delete.
      *
-     * @param mixed $delete the delete
+     * @param boolean $delete the delete
      *
      * @return self
      */
@@ -218,7 +218,7 @@ class RoleResource extends BasicEntity
     /**
      * Gets the Insert permission.
      *
-     * @return mixed
+     * @return boolean
      */
     public function getInsert()
     {
@@ -228,7 +228,7 @@ class RoleResource extends BasicEntity
     /**
      * Sets the Insert permission.
      *
-     * @param mixed $insert the insert
+     * @param boolean $insert the insert
      *
      * @return self
      */

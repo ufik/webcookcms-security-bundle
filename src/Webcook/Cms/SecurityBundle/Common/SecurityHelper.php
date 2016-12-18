@@ -18,7 +18,6 @@ class SecurityHelper
     /**
      * Get system resources name.
      *
-     * @param string $rootDir Root directory path.
      *
      * @return array Array of system resources.
      */

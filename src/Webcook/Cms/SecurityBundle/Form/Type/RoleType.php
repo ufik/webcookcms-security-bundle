@@ -31,13 +31,13 @@ class RoleType extends AbstractType
         $builder
             ->add('name', TextType::class, array(
                 'constraints' => array(
-                    new NotBlank(array( 'message' => 'security.roles.form.name.required')),
+                    new NotBlank(array('message' => 'security.roles.form.name.required')),
                 ),
                 'label' => 'security.roles.form.name',
             ))
             ->add('role', TextType::class, array(
                 'constraints' => array(
-                    new NotBlank(array( 'message' => 'security.roles.form.rolename.required')),
+                    new NotBlank(array('message' => 'security.roles.form.rolename.required')),
                 ),
                 'label' => 'security.roles.form.role',
             ))->add('version', HiddenType::class, array('mapped' => false));

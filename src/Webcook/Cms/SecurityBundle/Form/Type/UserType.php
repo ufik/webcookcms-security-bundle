@@ -37,13 +37,13 @@ class UserType extends AbstractType
         $builder
             ->add('username', TextType::class, array(
                 'constraints' => array(
-                    new NotBlank(array( 'message' => 'security.user.form.name.required')),
+                    new NotBlank(array('message' => 'security.user.form.name.required')),
                 ),
                 'label' => 'security.users.form.username',
             ))
             ->add('email', EmailType::class, array(
                 'constraints' => array(
-                    new Email(array( 'message' => 'security.user.form.name.not_valid')),
+                    new Email(array('message' => 'security.user.form.name.not_valid')),
                 ),
                 'label' => 'security.users.form.email',
             ))
