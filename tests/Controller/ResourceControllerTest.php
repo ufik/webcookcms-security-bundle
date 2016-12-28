@@ -2,7 +2,7 @@
 
 namespace Webcook\Cms\SecurityBundle\Tests\Controller;
 
-class ResourceControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
+class ResourceControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 {
     public function testGetResources()
     {

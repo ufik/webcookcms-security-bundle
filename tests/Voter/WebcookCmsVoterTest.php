@@ -4,7 +4,7 @@ namespace Webcook\Cms\SecurityBundle\Tests\Controller;
 
 use Webcook\Cms\SecurityBundle\Authorization\Voter\WebcookCmsVoter;
 
-class WebcookCmsVoterTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
+class WebcookCmsVoterTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 {
 	private $WebcookCmsVoter;
 

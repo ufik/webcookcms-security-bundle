@@ -3,7 +3,7 @@
 
 namespace Webcook\Cms\SecurityBundle\Tests\Controller;
 
-class SettingControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
+class SettingControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 {
     public function testGetSettings()
     {   

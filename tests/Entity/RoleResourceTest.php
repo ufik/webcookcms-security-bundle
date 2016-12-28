@@ -5,7 +5,7 @@ namespace Webcook\Cms\SecurityBundle\Tests\Entity;
 use Webcook\Cms\SecurityBundle\Entity\RoleResource;
 use Webcook\Cms\SecurityBundle\Authorization\Voter\WebcookCmsVoter;
 
-class RoleResourceTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
+class RoleResourceTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 {
     public function testPersist()
     {

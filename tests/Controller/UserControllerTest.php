@@ -2,7 +2,7 @@
 
 namespace Webcook\Cms\SecurityBundle\Tests\Controller;
 
-class UserControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
+class UserControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 {
     const TEST_PASS_HASH = 'xSr7r5rEPjstSyTI0LzlvqdHAtMeq4sYvpKjywW4r+k=';
 

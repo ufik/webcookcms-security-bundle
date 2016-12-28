@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "webcookcms/common-bundle": "~1.0@dev",
+        "webcookcms/core-bundle": "~1.0@dev",
         "lexik/jwt-authentication-bundle": "^2.0"
     },
     "autoload": {

@@ -7,7 +7,7 @@ use Webcook\Cms\SecurityBundle\Entity\Role;
 use Webcook\Cms\SecurityBundle\Entity\Setting;
 use \Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
-class UserTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
+class UserTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 {
     public function testPersist()
     {

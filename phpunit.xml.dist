@@ -5,7 +5,7 @@
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
          backupGlobals="false"
          colors="true"
-         bootstrap="vendor/webcookcms/common-bundle/src/Webcook/Cms/CommonBundle/Tests/bootstrap.php"
+         bootstrap="vendor/webcookcms/core-bundle/src/Webcook/Cms/CoreBundle/Tests/bootstrap.php"
 	 convertNoticesToExceptions="false"
 >
     <testsuites>
@@ -15,7 +15,7 @@
     </testsuites>
 
     <php>
-        <server name="KERNEL_DIR" value="vendor/webcookcms/common-bundle/src/Webcook/Cms/CommonBundle/Tests/" />
+        <server name="KERNEL_DIR" value="vendor/webcookcms/core-bundle/src/Webcook/Cms/CoreBundle/Tests/" />
     </php>
     
     <filter>

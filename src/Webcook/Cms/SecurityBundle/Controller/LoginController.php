@@ -8,7 +8,7 @@
 
 namespace Webcook\Cms\SecurityBundle\Controller;
 
-use Webcook\Cms\CommonBundle\Base\BaseRestController;
+use Webcook\Cms\CoreBundle\Base\BaseRestController;
 use Webcook\Cms\SecurityBundle\Controller\PublicControllerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,14 +23,14 @@ use FOS\RestBundle\Controller\Annotations\Get;
 class LoginController extends BaseRestController implements PublicControllerInterface
 {
 
-        /**
-         * Send an email with a link to reset user's password.
-         *
-         * @ApiDoc(
-         *  description="Send an email with a link to reset user's password."
-         * )
-         * @Post("password/email/reset", options={"i18n"=false})
-         */
+    /**
+    * Send an email with a link to reset user's password.
+    *
+    * @ApiDoc(
+    *  description="Send an email with a link to reset user's password."
+    * )
+    * @Post("password/email/reset", options={"i18n"=false})
+    */
     public function resetPasswordEmailAction(Request $request): Response
     {        
         $email = $request->request->get('email');
@@ -65,14 +65,14 @@ class LoginController extends BaseRestController implements PublicControllerInte
         return $this->handleView($view);
     }
 
-        /**
-         * Reset password view.
-         *
-         * @ApiDoc(
-         *  description="Reset password view."
-         * )
-         * @Get("password/reset", options={"i18n"=false})
-         */
+    /**
+    * Reset password view.
+    *
+    * @ApiDoc(
+    *  description="Reset password view."
+    * )
+    * @Get("password/reset", options={"i18n"=false})
+    */
     public function resetPasswordGetAction(Request $request): Response
     {
         $token = $request->query->get('token');

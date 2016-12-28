@@ -10,7 +10,7 @@ namespace Webcook\Cms\SecurityBundle\Entity;
 
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use Webcook\Cms\CommonBundle\Base\BasicEntity;
+use Webcook\Cms\CoreBundle\Base\BasicEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

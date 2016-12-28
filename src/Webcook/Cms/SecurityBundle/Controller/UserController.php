@@ -8,7 +8,7 @@
 
 namespace Webcook\Cms\SecurityBundle\Controller;
 
-use Webcook\Cms\CommonBundle\Base\BaseRestController;
+use Webcook\Cms\CoreBundle\Base\BaseRestController;
 use Webcook\Cms\SecurityBundle\Entity\User;
 use Webcook\Cms\SecurityBundle\Form\Type\UserType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

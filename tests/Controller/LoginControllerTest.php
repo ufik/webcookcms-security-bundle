@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Tests\Templating\Helper\Fixtures\StubTemplate
 use Symfony\Component\Templating\PhpEngine;
 use Symfony\Component\Templating\Loader\FilesystemLoader;
 
-class LoginControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
+class LoginControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 {
     public function testPasswordEmail()
     {

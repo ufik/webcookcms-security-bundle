@@ -2,7 +2,7 @@
 
 namespace Webcook\Cms\SecurityBundle\Tests\Controller;
 
-class RoleControllerTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
+class RoleControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 {
     public function testGetRoles()
     {

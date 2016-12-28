@@ -8,7 +8,7 @@
 
 namespace Webcook\Cms\SecurityBundle\Controller;
 
-use Webcook\Cms\CommonBundle\Base\BaseRestController;
+use Webcook\Cms\CoreBundle\Base\BaseRestController;
 use Webcook\Cms\SecurityBundle\Entity\Resource;
 use Webcook\Cms\SecurityBundle\Entity\RoleResource;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

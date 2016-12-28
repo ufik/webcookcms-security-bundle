@@ -8,7 +8,7 @@
 
 namespace Webcook\Cms\SecurityBundle\Controller;
 
-use Webcook\Cms\CommonBundle\Base\BaseRestController;
+use Webcook\Cms\CoreBundle\Base\BaseRestController;
 
 /**
  * Test Controller - sync resources

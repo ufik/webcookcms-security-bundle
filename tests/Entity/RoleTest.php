@@ -4,7 +4,7 @@ namespace Webcook\Cms\SecurityBundle\Tests\Entity;
 
 use Webcook\Cms\SecurityBundle\Entity\Role;
 
-class RoleTest extends \Webcook\Cms\CommonBundle\Tests\BasicTestCase
+class RoleTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 {
     public function testPersist()
     {

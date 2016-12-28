@@ -8,7 +8,7 @@
 
 namespace Webcook\Cms\SecurityBundle\Entity;
 
-use Webcook\Cms\CommonBundle\Base\BasicEntity;
+use Webcook\Cms\CoreBundle\Base\BasicEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Webcook\Cms\SecurityBundle\Authorization\Voter\WebcookCmsVoter;
 
