@@ -1,1 +1,1 @@
-vendor/webcookcms/common-bundle/runTests.sh
+vendor/webcookcms/core-bundle/runTests.sh
