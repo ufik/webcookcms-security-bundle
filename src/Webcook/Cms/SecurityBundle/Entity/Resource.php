@@ -24,7 +24,7 @@ class Resource extends BasicEntity
      *
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=30, unique=true)
+     * @ORM\Column(name="name", type="string", length=64, unique=true)
      */
     private $name;
 
