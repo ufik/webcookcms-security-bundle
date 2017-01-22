@@ -3,7 +3,7 @@
 /**
  * This file is part of Webcook security bundle.
  *
- * See LICENSE file in the root of the bundle. Webcook 
+ * See LICENSE file in the root of the bundle. Webcook
  */
 
 namespace Webcook\Cms\SecurityBundle\Entity;
@@ -12,10 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Webcook\Cms\CoreBundle\Base\BasicEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * System user entity.
  *
+ * @ApiResource
  * @ORM\Table(name="SecurityUser")
  * @ORM\Entity(repositoryClass="Webcook\Cms\SecurityBundle\Entity\UserRepository")
  */
@@ -23,8 +26,10 @@ class User extends BasicEntity implements UserInterface, \Serializable
 {
     /**
      * Username of the user.
-     * 
+     *
      * @ORM\Column(type="string", length=64, unique=true)
+     * @Assert\NotNull
+     * @Assert\NotBlank
      */
     private $username;
 
@@ -52,6 +57,8 @@ class User extends BasicEntity implements UserInterface, \Serializable
      * Email of the user.
      *
      * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\NotNull
+     * @Assert\NotBlank
      */
     private $email;
 
@@ -369,6 +376,4 @@ class User extends BasicEntity implements UserInterface, \Serializable
 
         return $this;
     }
-
-
 }

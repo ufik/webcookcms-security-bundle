@@ -1,5 +1,5 @@
 parameters:
-    resources_path: %kernel.root_dir%/../../../../../../../../src/Webcook/Cms/SecurityBundle/Controller
+    resources_path: %kernel.root_dir%/../../../../../../../../src/Webcook/Cms/SecurityBundle/Entity
 
 framework:
     router:

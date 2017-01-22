@@ -3,7 +3,7 @@
 /**
  * This file is part of Webcook security bundle.
  *
- * See LICENSE file in the root of the bundle. Webcook 
+ * See LICENSE file in the root of the bundle. Webcook
  */
 
 namespace Webcook\Cms\SecurityBundle\Entity;
@@ -11,6 +11,9 @@ namespace Webcook\Cms\SecurityBundle\Entity;
 use Webcook\Cms\CoreBundle\Base\BasicEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Webcook\Cms\SecurityBundle\Authorization\Voter\WebcookCmsVoter;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Role resource entity.

@@ -1,17 +1,5 @@
-webcook_cms_security_users:
-    resource: "@WebcookCmsSecurityBundle/Controller/UserController.php"
-    type:     rest
-
 webcook_cms_security_roles:
     resource: "@WebcookCmsSecurityBundle/Controller/RoleController.php"
-    type:     rest
-
-webcook_cms_security_resources:
-    resource: "@WebcookCmsSecurityBundle/Controller/ResourceController.php"
-    type:     rest
-
-webcook_cms_security_settings:
-    resource: "@WebcookCmsSecurityBundle/Controller/SettingController.php"
     type:     rest
 
 webcook_cms_security_login:

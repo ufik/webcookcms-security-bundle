@@ -3,13 +3,12 @@
 /**
  * This file is part of Webcook security bundle.
  *
- * See LICENSE file in the root of the bundle. Webcook 
+ * See LICENSE file in the root of the bundle. Webcook
  */
 
 namespace Webcook\Cms\SecurityBundle\Controller;
 
 use Webcook\Cms\CoreBundle\Base\BaseRestController;
-use Webcook\Cms\SecurityBundle\Controller\PublicControllerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Webcook\Cms\SecurityBundle\Entity\User;
@@ -20,7 +19,7 @@ use FOS\RestBundle\Controller\Annotations\Get;
 /**
  * Login controller.
  */
-class LoginController extends BaseRestController implements PublicControllerInterface
+class LoginController extends BaseRestController
 {
 
     /**
@@ -32,7 +31,7 @@ class LoginController extends BaseRestController implements PublicControllerInte
     * @Post("password/email/reset", options={"i18n"=false})
     */
     public function resetPasswordEmailAction(Request $request): Response
-    {        
+    {
         $email = $request->request->get('email');
         $user  = $this->getEntityManager()->getRepository('Webcook\Cms\SecurityBundle\Entity\User')->findOneBy(array('email'=> $email));
 
@@ -48,11 +47,11 @@ class LoginController extends BaseRestController implements PublicControllerInte
             ->setTo($email)
             ->setBody($this->render(
                 'WebcookCmsSecurityBundle:Auth:emailTemplate.html.twig',
-                    array(
-                        'user'      => $user->getUsername(),
-                        'resetLink' => $resetLink
-                    )
-                ))
+                array(
+                    'user'      => $user->getUsername(),
+                    'resetLink' => $resetLink
+                )
+            ))
             ->setContentType("text/html");
 
         $result = $this->get('mailer')->send($message);
@@ -146,7 +145,7 @@ class LoginController extends BaseRestController implements PublicControllerInte
 
     private function setResetToken(User $user): string
     {
-        $token     = md5(uniqid(mt_rand(), true));            
+        $token     = md5(uniqid(mt_rand(), true));
         $resetLink = $this->generateUrl('reset_password_get', array('token' => $token), true);
         $date      = new \DateTime();
 

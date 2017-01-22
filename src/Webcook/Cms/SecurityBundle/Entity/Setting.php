@@ -3,7 +3,7 @@
 /**
  * This file is part of Webcook security bundle.
  *
- * See LICENSE file in the root of the bundle. Webcook 
+ * See LICENSE file in the root of the bundle. Webcook
  */
 
 namespace Webcook\Cms\SecurityBundle\Entity;
@@ -11,11 +11,14 @@ namespace Webcook\Cms\SecurityBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Webcook\Cms\CoreBundle\Base\BasicEntity;
-
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * System setting entity.
  *
+ * @ApiResource
  * @ORM\Table(name="Setting", uniqueConstraints={
  *     @ORM\UniqueConstraint(name="uniqueSetting", columns={"key1", "section", "user_id"})
  * })
@@ -25,8 +28,10 @@ class Setting extends BasicEntity
 {
     /**
      * Name of the setting.
-     * 
-     * @ORM\Column(type="string", length=25)
+     *
+     * @ORM\Column(type="string", length=25, nullable=false)
+     * @Assert\NotNull
+     * @Assert\NotBlank
      */
     private $name;
 
@@ -34,6 +39,8 @@ class Setting extends BasicEntity
      * Key of the setting.
      *
      * @ORM\Column(name="key1", type="string", length=64, nullable=false)
+     * @Assert\NotNull
+     * @Assert\NotBlank
      */
     private $key;
 
@@ -41,6 +48,8 @@ class Setting extends BasicEntity
      * Value of the setting.
      *
      * @ORM\Column(type="string", length=60, nullable=false)
+     * @Assert\NotNull
+     * @Assert\NotBlank
      */
     private $value;
 
@@ -48,11 +57,14 @@ class Setting extends BasicEntity
      * Section of the setting.
      *
      * @ORM\Column(type="string", length=60, nullable=false)
+     * @Assert\NotNull
+     * @Assert\NotBlank
      */
     private $section;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="settings")
+     * @ApiProperty(readable=false)
      */
     protected $user;
 
@@ -138,7 +150,7 @@ class Setting extends BasicEntity
     public function getSection()
     {
         return $this->section;
-    }   
+    }
 
     /**
      * Sets the value of section.
@@ -177,5 +189,4 @@ class Setting extends BasicEntity
 
         return $this;
     }
-    
 }

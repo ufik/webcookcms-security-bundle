@@ -3,7 +3,7 @@
 /**
  * This file is part of Webcook security bundle.
  *
- * See LICENSE file in the root of the bundle. Webcook 
+ * See LICENSE file in the root of the bundle. Webcook
  */
 
 namespace Webcook\Cms\SecurityBundle\Entity;
@@ -12,10 +12,14 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Webcook\Cms\CoreBundle\Base\BasicEntity;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * System role entity.
  *
+ * @ApiResource
  * @ORM\Table(name="SecurityRole")
  * @ORM\Entity()
  */
@@ -25,6 +29,8 @@ class Role extends BasicEntity implements RoleInterface
      * Role name.
      *
      * @ORM\Column(name="name", type="string", length=30)
+     * @Assert\NotNull
+     * @Assert\NotBlank
      */
     private $name;
 
@@ -32,13 +38,16 @@ class Role extends BasicEntity implements RoleInterface
      * Role identification.
      *
      * @ORM\Column(name="role", type="string", length=20, unique=true)
+     * @Assert\NotNull
+     * @Assert\NotBlank
      */
     private $role;
 
     /**
      * Resources of the role and their permissions.
      *
-     * @ORM\OneToMany(targetEntity="RoleResource", mappedBy="role", cascade={"remove"}, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="RoleResource", mappedBy="role", cascade={"remove"}, fetch="EAGER"))
+     * @ApiProperty(readable=false)
      **/
     private $resources;
 

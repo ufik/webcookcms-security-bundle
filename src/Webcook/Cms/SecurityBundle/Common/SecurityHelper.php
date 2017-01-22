@@ -3,12 +3,13 @@
 /**
  * This file is part of Webcook security bundle.
  *
- * See LICENSE file in the root of the bundle. Webcook 
+ * See LICENSE file in the root of the bundle. Webcook
  */
 
 namespace Webcook\Cms\SecurityBundle\Common;
 
 use Symfony\Component\Finder\Finder;
+use Doctrine\Common\Annotations\AnnotationReader;
 
 /**
  * Basic helper class.
@@ -26,7 +27,7 @@ class SecurityHelper
         $resources = array();
         $finder = new Finder();
         try {
-            $finder->files()->in($path)->name('*Controller.php');
+            $finder->files()->in($path)->name('*.php');
         } catch (\InvalidArgumentException $e) {
             return $resources;
         }
@@ -34,9 +35,8 @@ class SecurityHelper
         $added = 0;
         foreach ($finder as $file) {
             $fileContent = file_get_contents($file->getRealPath());
-            if (strpos($fileContent, 'extends BaseRestController') !== false
-            && strpos($fileContent, 'implements PublicControllerInterface') === false) {
-                $resources[] = self::extractName($file->getRealPath());
+            if (strpos($fileContent, '@ApiResource') !== false) {
+                $resources[] = self::extractName($file->getRealPath(), str_replace('.php', '', $file->getFilename()));
             }
         }
 
@@ -46,15 +46,15 @@ class SecurityHelper
     /**
      * Extract name from the controller path string.
      *
-     * @param string $controllerPath Path of the controller.
+     * @param string $resourcePath Path of the controller.
      *
      * @return string Name.
      */
-    public static function extractName($controllerPath)
+    public static function extractName($resourcePath, $name)
     {
-        $controllerPath = str_replace('\\', '/', $controllerPath);
+        $resourcePath = str_replace('\\', '/', $resourcePath);
 
-        return self::extract($controllerPath, 'Bundle').' - '.self::extract($controllerPath, 'Controller');
+        return self::extract($resourcePath, 'Bundle').' - '.$name;
     }
 
     /**

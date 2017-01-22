@@ -3,17 +3,27 @@
 /**
  * This file is part of Webcook security bundle.
  *
- * See LICENSE file in the root of the bundle. Webcook 
+ * See LICENSE file in the root of the bundle. Webcook
  */
 
 namespace Webcook\Cms\SecurityBundle\Entity;
 
 use Webcook\Cms\CoreBundle\Base\BasicEntity;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * System resource entity.
  *
+ * @ApiResource(
+ *  collectionOperations={
+ *      "get"={"method"="GET"}
+ *  },
+ *  itemOperations={
+ *      "get"={"method"="GET"},
+ *      "delete"={"method"="DELETE"}
+ *})
  * @ORM\Table(name="SecurityResource")
  * @ORM\Entity()
  */
