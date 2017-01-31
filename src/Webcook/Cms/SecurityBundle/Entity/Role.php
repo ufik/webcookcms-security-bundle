@@ -47,7 +47,6 @@ class Role extends BasicEntity implements RoleInterface
      * Resources of the role and their permissions.
      *
      * @ORM\OneToMany(targetEntity="RoleResource", mappedBy="role", cascade={"remove"}, fetch="EAGER"))
-     * @ApiProperty(readable=false)
      **/
     private $resources;
 

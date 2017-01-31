@@ -11,6 +11,8 @@ class RoleControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
         $roles = $this->client->getResponse()->getContent();
 
+        var_dump($roles);
+        
         $data = json_decode($roles, true);
         $this->assertCount(2, $data);
     }
@@ -27,8 +29,7 @@ class RoleControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
         $this->assertEquals(1, $data['version']);
         $this->assertEquals('Administrator', $data['name']);
         $this->assertEquals('ROLE_ADMIN', $data['role']);
-        $this->markTestIncomplete('Reading of resources is skipped, problems with api-platform.');
-        //$this->assertGreaterThan(2, $data['resources']);
+        $this->assertGreaterThan(2, $data['resources']);
     }
 
     public function testPost()
